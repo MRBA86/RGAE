@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% for project in projects %}
+    <div class="card" style="width: 18rem; display:inline-block">  
+    <img src="{% static 'image/default.jpg' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{ project.title }}</h5>
+        <p class="card-text"> {{ project.content|truncatewords:15 }}</p>
+        <a href="{{ project.get_absolute_url }}" class="bg-blue-700 hover:bg-blue-600 transition text-white rounded-lg w-full h-full px-6" >مشاهده پروژه </a>
+    </div>
+    </div>
+{% endfor %}
+
+{% endblock content %}
