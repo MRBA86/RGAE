@@ -1,8 +1,10 @@
 {% load static %}
 {% if messages %}
+<div class="bg-white shadow-large lg:my-10 mx-5 rounded-xl md:rounded-2xl p-3 md:p-5 border">
   {% for message in messages %}
     <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
   {% endfor %}
+</div>
   {% endif %}
 
   {% if form.errors %}
