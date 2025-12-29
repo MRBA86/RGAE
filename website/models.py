@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from utils import slugify_farsi
+from taggit.managers import TaggableManager
 import django_jalali.db.models as jmodels
 
 class Contact(models.Model):
@@ -60,13 +61,33 @@ class Cooperateus(models.Model):
     def __str__(self):
         return f'{self.phone_number} - {self.last_name} - {self.created_at}'
 
+class ProjectCategory(models.Model):
+    name = models.CharField(verbose_name = "نام دسته بندی", max_length=255)
+    slug = models.SlugField(verbose_name = "اسلاگ دسته بندی", max_length=255, unique=True, allow_unicode=True)
+    
+    class Meta:
+        verbose_name = 'دسته بندی پروژه'
+        verbose_name_plural = 'دسته بندی های پروژه'
+        
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify_farsi(self.name)
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return self.name
 
+    def get_absolute_url(self):
+        return reverse("website:category-filter", args=[self.slug]) 
 
 class Project(models.Model):
     
     title = models.CharField(verbose_name="عنوان ", max_length=255) 
     slug = models.SlugField(verbose_name="اسلاگ ", max_length=255, unique=True, allow_unicode=True)
+    tags = TaggableManager(verbose_name = "تگ های پست", blank=True)
+    category = models.ManyToManyField(ProjectCategory, verbose_name = "دسته بندی پروژه",)
     content = models.TextField(verbose_name="محتوا پروژه ")
+    counted_views = models.IntegerField(verbose_name = "تعداد بازدید", default=0)
     created_date = jmodels.jDateTimeField(verbose_name="تاریخ ایجاد ", auto_now_add=True)
     updated_date = jmodels.jDateTimeField(verbose_name="تاریخ ویرایش ", auto_now=True)
     status = models.BooleanField(verbose_name="وضعیت ", default=False)

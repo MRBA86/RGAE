@@ -125,7 +125,7 @@ class UserProfileView(LoginRequiredMixin, View):
     
     def get(self, request, user_id):
         user = User.objects.get(id=user_id)
-        user_orders = Order.objects.filter(user=user).order_by('-created_at')
+        user_orders = Order.objects.filter(user=user).order_by('-created_at')[:5]
         return render(request, 'accounts/user_profile.html', {'user': user, 'user_orders': user_orders})
 
 class UserAddressView(LoginRequiredMixin, View):
@@ -145,7 +145,7 @@ class UserDetailsView(LoginRequiredMixin, View):
 class AddressCreateView(LoginRequiredMixin, View):
     """ایجاد آدرس جدید"""
     form_class = AddressForm
-    template_name = 'accounts/address_form.html'
+    template_name = 'accounts/address_create.html'
     
     def get(self, request):
         form = self.form_class()
@@ -170,20 +170,20 @@ class AddressCreateView(LoginRequiredMixin, View):
 class AddressUpdateView(LoginRequiredMixin, View):
     """ویرایش آدرس"""
     
-    def get(self, request, pk):
-        address = get_object_or_404(Address, pk=pk, user=request.user)
+    def get(self, request, address_id):
+        address = get_object_or_404(Address, pk=address_id, user=request.user)
         form = AddressForm(instance=address)
-        return render(request, 'accounts/address_form.html', {'form': form})
+        return render(request, 'accounts/address_update.html', {'form': form})
     
-    def post(self, request, pk):
-        address = get_object_or_404(Address, pk=pk, user=request.user)
+    def post(self, request, address_id):
+        address = get_object_or_404(Address, pk=address_id, user=request.user)
         form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
             messages.success(request, 'آدرس با موفقیت به‌روزرسانی شد')
-            return redirect('accounts:address_list')
+            return redirect('accounts:user_addresses')
         
-        return render(request, 'accounts/address_form.html', {'form': form})
+        return render(request, 'accounts/address_update.html', {'form': form})
 
 class AddressDeleteView(LoginRequiredMixin, View):
     """حذف آدرس (غیرفعال کردن)"""

@@ -3,11 +3,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .cart import Cart
 from products.models import Product
-from .forms import CartAddForm, OrderAddressForm
+from .forms import CartAddForm, OrderAddressForm, CouponAplyForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Order, OrderItem
+from .models import Order, OrderItem, Coupon
 from django.contrib import messages
 from accounts.models import Address
+import jdatetime
 #from django_jalali.
 
 class CartView(View):
@@ -48,9 +49,33 @@ class OrderCreateView(LoginRequiredMixin, View):
     
     
 class OrderDetailView(LoginRequiredMixin, View):
+    form_class = CouponAplyForm
     def get(self, request, order_id):
+        form = self.form_class
         order = get_object_or_404(Order, id=order_id)
-        return render(request, 'orders/checkout.html', {'order':order})
+        return render(request, 'orders/checkout.html', {'order':order, 'form': form})
+    
+class CouponApplyView(LoginRequiredMixin, View):
+    form_class = CouponAplyForm
+    
+    def post(self, request, order_id):
+        form = self.form_class(request.POST)
+        now = jdatetime.datetime.now()
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            print(code)
+            print(now)
+            try:
+                coupon = Coupon.objects.get(code__exact=code, valid_from__lte=now, valid_to__gte=now, active=True)
+            except Coupon.DoesNotExist:
+                messages.error(request, 'کد تخفیف وارده معتبر نمی باشد', 'danger')
+                return redirect('orders:order_detail', order_id)
+            order = Order.objects.get(id=order_id)
+            order.discount = coupon.discount
+            order.save()
+            return redirect('orders:order_detail', order_id)
+                            
+
 
 # orders/views.py
 class AddAddressToOrderView(LoginRequiredMixin, View):

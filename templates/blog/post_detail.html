@@ -160,20 +160,22 @@
             <span class="bg-blue-400 w-full h-1"></span>
           </div>
           <ul class="grid w-full gap-3">
+            {% for l_post in latest_posts %}
             <li>
-              <a href="./blog(single).html" class="flex items-center justify-start gap-x-2 w-full p-2 text-gray-600 bg-white border border-gray-300 rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100">                           
-                <img class="max-w-20 rounded-md" src="./assets/image/blog/7.jpg" alt="">
+              <a href="{{ l_post.get_absolute_url }}" class="flex items-center justify-start gap-x-2 w-full p-2 text-gray-600 bg-white border border-gray-300 rounded-lg cursor-pointer hover:text-gray-600 hover:bg-gray-100">                           
+                <img class="max-w-20 rounded-md" src="{{ l_post.image.url }}" alt="">
                 <div class="text-center flex flex-col space-y-3">
-                  <div class="text-sm sm:text-base font-semibold">محصول جدید و قدرتمند اپل</div>
+                  <div class="text-sm sm:text-base font-semibold">{{ l_post.title }}</div>
                   <div class="flex items-start gap-x-1 text-xs text-zinc-400">
                     <svg class="fill-gray-400" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"></path></svg>
                     <span>
-                      2 دقیقه
+                      {{ l_post.published_date|jformat:"%A" }}
                     </span>
                   </div>
                 </div>
               </a>
             </li>
+            {% endfor %}
           </ul>
         </div>
         <div class="p-3 bg-white rounded-xl shadow-lg">

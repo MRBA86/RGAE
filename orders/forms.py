@@ -5,6 +5,10 @@ class CartAddForm(forms.Form):
     quantity = forms.IntegerField(min_value=1 , max_value=10)
     
 
+class CouponAplyForm(forms.Form):
+    code = forms.CharField(label='کد تخفیف')
+    
+
 
 class OrderAddressForm(forms.Form):
     USE_EXISTING_ADDRESS = 'existing'
