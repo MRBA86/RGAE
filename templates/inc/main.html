@@ -28,8 +28,8 @@
       <!-- slider -->
       <div class="flex flex-col md:flex-row gap-4 px-3">
         <div class="flex flex-col justify-center items-center mx-auto w-full sm:w-6/12 md:w-2/12 bg-blue-600 rounded-xl">
-          <img class="w-5/12" src="{% static 'image/FeaturedPromos.svg' %}" alt="">
-          <img class="w-10/12" src="{% static 'image/Electronics.webp' %}" alt="">
+          <img class="w-5/12" src="{% static 'image/text-last-projects.png' %}" alt="">
+          <img class="w-10/12" src="{% static 'image/Picture-Last-Projects.webp' %}" alt="">
         </div>
         
         <div class="swiper offSlider w-full md:w-10/12">
@@ -38,7 +38,7 @@
               <div class="swiper-slide">
                 <div class="card swiper-slide bg-white border border-zinc-300 rounded-xl p-3">
                   <div class="lg:flex items-center justify-between">
-                    <img class="w-120 max-w-96 mx-auto h-200" src="{{ project.primary_image.image.url }}" alt="">
+                    <img class="w-120 max-w-96 mx-auto" src="{{ project.primary_image.image.url }}" alt="">
                     <div class="space-y-5 lg:space-y-12 w-full px-10">
                       <span class="lg:flex justify-between items-center">
                         <a href="{{ project.get_absolute_url }}" class="flex flex-col gap-y-2">
@@ -71,7 +71,7 @@
     <!-- 1 banner -->
     <div class="my-10 px-3">
       <a href="">
-        <img class="rounded-lg" src="{% static 'image/banner/11.jpg' %}" alt="">
+        <img class="rounded-lg" src="{% static 'image/banner/11.webp' %}" alt="">
       </a>
     </div>
 
