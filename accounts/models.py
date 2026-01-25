@@ -14,7 +14,7 @@ class User(AbstractBaseUser):
     image = models.ImageField(upload_to='User/%Y%m%d/',default='User/default.jpg')
     first_name = models.CharField(verbose_name="نام", max_length=58)
     last_name = models.CharField(verbose_name="نام خانوادگی", max_length=128)
-    gender = models.CharField(verbose_name="جنسیت", max_length=12, choices=Genders.choices, default='مرد')
+    gender = models.CharField(verbose_name="جنسیت", max_length=12, choices=Genders.choices)
     national_id = models.CharField(verbose_name="شماره ملی", max_length=10, unique=True)
     birth_date = jmodels.jDateField(verbose_name="تاریخ تولد", blank=True, null=True)
     is_active = models.BooleanField(verbose_name="فعال هست ؟", default=True)

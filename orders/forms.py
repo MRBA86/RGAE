@@ -1,5 +1,6 @@
 from django import forms
 from accounts.models import Address
+from orders.models import Order
 
 class CartAddForm(forms.Form):
     quantity = forms.IntegerField(min_value=1 , max_value=10)
@@ -8,6 +9,9 @@ class CartAddForm(forms.Form):
 class CouponAplyForm(forms.Form):
     code = forms.CharField(label='کد تخفیف')
     
+class PaymentSelectForm(forms.Form):
+
+    payment_type = forms.ChoiceField(choices=Order.PaymentType.choices, widget=forms.RadioSelect, label='روش پرداخت')
 
 
 class OrderAddressForm(forms.Form):

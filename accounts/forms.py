@@ -39,15 +39,9 @@ class UserUpdateDetailsForm(forms.ModelForm):
         fields = ['email', 'phone_number', 'password', 'image', 'first_name', 'last_name', 'birth_date', 'gender','national_id']
         
 class UserRegisterationForm(forms.Form):
-    
-    GENDERS_CHOICE = (
-        ( 'MALE' , 'مرد'),
-        ('FEMALE' , 'زن'),
-        ) 
         
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=128)
-    gender = forms.ChoiceField(choices=GENDERS_CHOICE)
     phone_number = forms.CharField(max_length=11)
     email = forms.EmailField()
     national_id = forms.CharField(max_length=10)
@@ -73,6 +67,13 @@ class UserRegisterationForm(forms.Form):
         if user :
             raise ValidationError('کد ملی وارده موجود می باشد')
         return national_id
+    
+class UserProfileInfoForm(forms.ModelForm):
+    
+      class Meta:
+        model = User
+        fields = ['email', 'phone_number', 'image', 'first_name', 'last_name', 'birth_date', 'gender','national_id']
+       
     
 class VerifyCodeForm(forms.Form):
     code = forms.IntegerField()

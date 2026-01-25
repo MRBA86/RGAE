@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from .forms import UserRegisterationForm, VerifyCodeForm, UserLoginForm, AddressForm
+from .forms import UserRegisterationForm, VerifyCodeForm, UserLoginForm,UserProfileInfoForm, AddressForm
 from utils import send_otp_code
 import random
 from django.contrib import messages
@@ -60,11 +60,8 @@ class UserRegisterVerifyCodeView(View):
         user_session = request.session['user_registration_info']
         code_instance = OtpCode.objects.get(phone_number=user_session['phone_number'])
         form = self.form_class(request.POST)
-        print(code_instance)
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd)
-            print(code_instance)
             if cd['code'] == code_instance.code :
                 User.objects.create_user(user_session['phone_number'], user_session['email'],
                                          user_session['national_id'], user_session['password'])
@@ -72,8 +69,6 @@ class UserRegisterVerifyCodeView(View):
                 messages.success(request, 'ثبت نام شما با موفقیت انجام شد', 'success')
                 return redirect('website:home')
             else:
-                print(code_instance)
-                print(cd['code'])
                 messages.error(request, ' کد وارد شده اشتباه است', 'danger')
                 return redirect('accounts:verify_code')
         return redirect('website:home')
@@ -128,19 +123,21 @@ class UserProfileView(LoginRequiredMixin, View):
         user_orders = Order.objects.filter(user=user).order_by('-created_at')[:5]
         return render(request, 'accounts/user_profile.html', {'user': user, 'user_orders': user_orders})
 
+    
+class UserDetailsView(LoginRequiredMixin, View):
+    
+    def get(self, request):
+        form = UserProfileInfoForm(instance=request.user)
+        return render(request, 'accounts/user_profile_info.html', {'form': form})
+    
+    def post(self, request):
+        pass
+
 class UserAddressView(LoginRequiredMixin, View):
     
     def get(self, request):
         user_addresses = Address.objects.filter(user=request.user , is_active=True)
         return render(request, 'accounts/user_addresses.html', {'user_addresses': user_addresses})
-
-    
-class UserDetailsView(LoginRequiredMixin, View):
-    def get(self, request):
-        pass
-    
-    def post(self, request):
-        pass
 
 class AddressCreateView(LoginRequiredMixin, View):
     """ایجاد آدرس جدید"""
@@ -218,7 +215,7 @@ class SetDefaultAddressView(LoginRequiredMixin, View):
         address.is_default = True
         address.save()
         
-        messages.success(request, 'آدرس پیش‌فرض تغییر کرد', 'success')
+        messages.success(request, 'آدرس پیش‌ فرض تغییر کرد', 'success')
         return redirect('accounts:user_addresses')
  
     
@@ -226,7 +223,7 @@ class UserOrdersView(LoginRequiredMixin, View):
     
     def get(self, request):
         user_orders = Order.objects.filter(user=request.user).order_by('-created_at')
-        return render(request, 'orders/user_orders.html', {'user_orders': user_orders} )
+        return render(request, 'accounts/user_orders.html', {'user_orders': user_orders} )
     
 class UserPasswordResetView(auth_views.PasswordResetView):
     

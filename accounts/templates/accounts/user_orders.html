@@ -1,0 +1,50 @@
+{% extends 'user_base_profile.html' %}
+{% load humanize %}
+{% load jformat %}
+
+{% block profile_content %}
+
+  <div class="mt-10">
+    <div class="text-zinc-800 text-lg mb-4">سفارش های من:</div>
+    <table class="w-full">
+      <thead>
+        <tr class="border-y">
+          <th>
+            <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400 py-3">شماره سفارش</p>
+          </th>
+          <th>
+            <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400">تاریخ</p>
+          </th>
+          <th>
+            <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400">مبلغ</p>
+          </th>
+          <th>
+            <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400">وضعیت</p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in user_orders %}
+        <tr class="hover:bg-zinc-100 text-xs md:text-sm">
+          <td class="px-3 py-4 border-b">
+            <p class="text-zinc-700">#{{order.order_number}}</p>
+          </td>
+          <td class="p-3 border-b">
+            <p class="text-zinc-700">{{order.created_at|jformat:"%A %d %B %Y"}}</p>
+          </td>
+          <td class="p-3 border-b">
+            <p class="text-zinc-700">{{order.get_total_price|intcomma}}</p>
+          </td>
+          <td class="p-3 border-b">
+            <p class="{% if order.status == 'paid' %}text-green-500
+                      {% elif order.status == 'waiting_approval' %}text-yellow-500
+                      {% elif order.status == 'canceled' %}text-red-500
+                      {% elif order.status == 'pending_payment' %}text-yellow-500
+                      {% endif %}"> {{order.get_status_display}}</p>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

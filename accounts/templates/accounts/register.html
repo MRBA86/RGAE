@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- blog content -->
+    <div class="my-2 py-5 lg:px-10 flex flex-col lg:flex-row gap-4 mx-3">
+      <div class="lg:w-10/12">
+        <div>
+          <form action="" method="post">
+            {% csrf_token %}
+            <!-- inputs -->
+            <div class="sm:flex gap-x-5 mt-5">
+              <div class="sm:w-1/2 mb-2 sm:mb-0 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                    نام
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input type="text" name="first_name" 
+                  class="focus:shadow-primary-outline text-sm leading-5.6 block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all focus:border-blue-300 focus:outline-none">
+              </div>
+              <div class="sm:w-1/2 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                    نام خانوادگی
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input type="text" name="last_name" 
+                  class="focus:shadow-primary-outline text-sm leading-5.6 block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all focus:border-blue-300 focus:outline-none">          
+              </div>
+            </div>
+            <div class="sm:flex gap-x-5 mt-5">
+              <div class="sm:w-1/2 mb-2 sm:mb-0 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                  ایمیل
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input type="email" name="email" 
+                  class="focus:shadow-primary-outline text-sm leading-5.6 block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all focus:border-blue-300 focus:outline-none">
+              </div>
+              <div class="sm:w-1/2 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                  کد ملی 
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input type="text" name="national_id" 
+                  class="focus:shadow-primary-outline text-sm leading-5.6 block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all focus:border-blue-300 focus:outline-none">          
+              </div>
+            </div>
+            <div class="sm:flex gap-x-5 mt-5">
+              <div class="sm:w-1/2 mb-2 sm:mb-0 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                  تلفن
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input type="tel" name="phone_number"  
+                  class="focus:shadow-primary-outline text-sm leading-5.6 block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all focus:border-blue-300 focus:outline-none">
+              </div>
+              <div class="sm:w-1/2 mb-2 sm:mb-0 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                  تاریخ تولد
+                  <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#4d4d4d" viewBox="0 0 256 256"><path d="M210.23,101.57l-72.6,29,51.11,65.71a6,6,0,0,1-9.48,7.36L128,137.77,76.74,203.68a6,6,0,1,1-9.48-7.36l51.11-65.71-72.6-29a6,6,0,1,1,4.46-11.14L122,119.14V40a6,6,0,0,1,12,0v79.14l71.77-28.71a6,6,0,1,1,4.46,11.14Z"></path></svg>
+                </label>
+                <input data-jdp data-jdp-only-date name="birth_date" class="placeholder:text-right text-sm block w-full rounded-md border border-gray-300 px-3 py-3 font-normal text-gray-700 outline-none transition-all focus:border-blue-500 focus:outline-none datetimepicker" id="datepicker" type="text" placeholder="روز/ماه/سال" data-options='{"disableMobile":true,"dateFormat":"y/m/d"}' />
+              </div>
+            </div>
+            <div class="sm:flex items-center gap-x-5 mt-5">
+              <div class="sm:w-1/2 flex flex-col gap-y-1">
+                <label class="text-sm text-zinc-700 flex">
+                  رمز عبور
+                </label>
+                <input type="password" placeholder="رمز عبور" name="password" class="placeholder:text-right text-sm block w-full rounded-md border border-gray-300 px-3 py-3 font-normal text-gray-700 outline-none transition-all focus:border-blue-500 focus:outline-none">
+              </div>
+              <div class="sm:w-1/2 flex flex-col gap-y-1">
+                <button class="mx-auto w-full px-2 py-2 mt-8 text-sm bg-blue-500 hover:bg-blue-400 transition text-gray-100 rounded-lg">
+                  <input type="submit" name="" value="ثبت نام">
+                </button>
+              </div>
+            </div>
+          </form>           
+        </div>
+      </div>
+    </div>                                
+{% endblock %}

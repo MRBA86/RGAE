@@ -39,7 +39,7 @@ class CartRemoveView(View):
 class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         cart = Cart(request)
-        order = Order.objects.create(user=request.user, status=Order.Status.PENDING_ADDRESS)
+        order = Order.objects.create(user=request.user, status=Order.Status.PENDING_PAYMENT)
         for item in cart:
             OrderItem.objects.create(order=order, product=item['product'], price= item['price'], quantity=item['quantity'])
             

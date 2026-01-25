@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="my-10 px-3">
+    <!-- TOP SLIDER -->
+    <div class="flex justify-between items-center pb-3">
+        <div class="px-4 py-2 flex justify-center items-center gap-x-1 font-bold md:text-lg text-zinc-700 relative">
+            <div class="z-10">
+                محصولات
+            </div>
+            <div class="w-20 h-2 bg-blue-300 shadow-lg absolute right-5 top-5 rounded-sm">
+            </div>
+        </div>
+    </div>
+    <div class="containerPSlider swiper">
+        <div class="product-slider1 swiper-initialized swiper-horizontal swiper-rtl swiper-backface-hidden">
+            <div class="card-wrapper swiper-wrapper" id="swiper-wrapper-9c79ac60ed7e7cd4" aria-live="polite" style="cursor: grab;">
+                {% for product in products %}
+                <div class="card swiper-slide my-2 p-2 md:p-4 bg-white rounded-2xl border group swiper-slide-active" role="group" aria-label="1 / 6" style="width: 330.087px; margin-left: 16px;">
+                    <!--
+                    <div class="flex justify-between relative">
+                        <div class="bg-blue-500 rounded-full w-8 h-8 pt-1 text-white flex items-center justify-center text-xs">
+                            % 10
+                        </div>
+                        <div class="flex flex-col gap-y-2 absolute opacity-0 group-hover:opacity-100 left-0 transition-opacity duration-300 ease-out">
+                            <svg class="bg-gray-200 rounded-full p-1 hover:fill-red-500 transition cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="#2b2b2b" viewBox="0 0 256 256"><path d="M178,34c-21,0-39.26,9.47-50,25.34C117.26,43.47,99,34,78,34A60.07,60.07,0,0,0,18,94c0,29.2,18.2,59.59,54.1,90.31a334.68,334.68,0,0,0,53.06,37,6,6,0,0,0,5.68,0,334.68,334.68,0,0,0,53.06-37C219.8,153.59,238,123.2,238,94A60.07,60.07,0,0,0,178,34ZM128,209.11C111.59,199.64,30,149.72,30,94A48.05,48.05,0,0,1,78,46c20.28,0,37.31,10.83,44.45,28.27a6,6,0,0,0,11.1,0C140.69,56.83,157.72,46,178,46a48.05,48.05,0,0,1,48,48C226,149.72,144.41,199.64,128,209.11Z"></path></svg>
+                            <svg class="bg-gray-200 rounded-full p-1 hover:fill-zinc-500 transition cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="#2b2b2b" viewBox="0 0 256 256"><path d="M236.24,179.76a6,6,0,0,1,0,8.48l-24,24a6,6,0,0,1-8.48-8.48L217.52,190H200.94a70.16,70.16,0,0,1-57-29.31l-41.71-58.4A58.11,58.11,0,0,0,55.06,78H32a6,6,0,0,1,0-12H55.06a70.16,70.16,0,0,1,57,29.31l41.71,58.4A58.11,58.11,0,0,0,200.94,178h16.58l-13.76-13.76a6,6,0,0,1,8.48-8.48Zm-92.06-74.41a5.91,5.91,0,0,0,3.48,1.12,6,6,0,0,0,4.89-2.51l1.19-1.67A58.11,58.11,0,0,1,200.94,78h16.58L203.76,91.76a6,6,0,1,0,8.48,8.48l24-24a6,6,0,0,0,0-8.48l-24-24a6,6,0,0,0-8.48,8.48L217.52,66H200.94a70.16,70.16,0,0,0-57,29.31L142.78,97A6,6,0,0,0,144.18,105.35Zm-32.36,45.3a6,6,0,0,0-8.37,1.39l-1.19,1.67A58.11,58.11,0,0,1,55.06,178H32a6,6,0,0,0,0,12H55.06a70.16,70.16,0,0,0,57-29.31l1.19-1.67A6,6,0,0,0,111.82,150.65Z"></path></svg>
+                        </div>
+                    </div>
+                    -->
+                    <div class="image-box mb-6 ">
+                        <img class="max-w-52 mx-auto" src="{{ product.primary_image.image.url }}" alt="">
+                    </div>
+                    <div class="space-y-5">
+                        <span class="mb-2 h-8 md:h-10 flex justify-between">
+                            <a href="{{ product.get_absolute_url }}" class="flex flex-col gap-y-2">
+                                <span class="text-sm font-semibold text-zinc-800">
+                                    {{ product.name }} 
+                                </span>
+                                <span class="text-xs text-zinc-500">
+                                    {{ product.title }} 
+                                </span>
+                            </a>
+                            <!--
+                            <div class="flex items-start gap-x-1 text-xs text-zinc-500">
+                                <span class="pt-0.5">
+                                    <span>
+                                        (28+)
+                                    </span>
+                                    <span>
+                                        4.3
+                                    </span>
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#f9bc00" viewBox="0 0 256 256"><path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path></svg>
+                            </div>
+                            -->
+                        </span>
+                        <!--
+                    <div class="flex items-center gap-x-2">
+                        <div class="flex justify-center gap-x-1 text-xs text-zinc-400">
+                            <div class="line-through">{{ product.price }}</div>
+                            <div class="line-through">تومان</div>
+                        </div>
+                        -->
+                        <div class="flex justify-center gap-x-1 font-semibold text-zinc-800">
+                            <div>{{ product.price|intcomma }}</div>
+                            <div>تومان</div>
+                        </div>
+
+                    </div>
+                    <a href="{{ product.get_absolute_url }}" class="flex items-center justify-center gap-x-1 text-sm w-full py-2 px-2 rounded-lg text-white bg-blue-500 hover:bg-blue-400 transition">
+                    مشاهده محصول
+                    </a>
+                </div>
+                {% endfor %}
+            </div>    
+            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
