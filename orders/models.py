@@ -13,7 +13,7 @@ class Order(models.Model):
 
     
     class Status(models.TextChoices):
-        
+        PENDING_ADDRESS = 'pending_address', 'در انتظار آدرس'
         PENDING_PAYMENT = 'pending_payment', 'در انتظار پرداخت'
         WAITING_APPROVAL = 'waiting_approval', 'در انتظار تأیید مدیر'
         APPROVED = 'approved', 'تأیید شده'
@@ -22,7 +22,7 @@ class Order(models.Model):
         
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_orders', verbose_name = "کاربر")
     payment_type = models.CharField(max_length=20, choices=PaymentType.choices, null=True, blank=True, verbose_name = "نوع پرداخت")
-    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING_PAYMENT, verbose_name = "وضعیت سفارش" ) # وضعیت پیش‌فرض
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING_ADDRESS, verbose_name = "وضعیت سفارش" ) # وضعیت پیش‌فرض
     order_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     paid = models.BooleanField(verbose_name = "پرداخت شده ؟", default=False)
     created_at = jmodels.jDateTimeField(verbose_name = "تاریخ ایجاد", auto_now_add=True)

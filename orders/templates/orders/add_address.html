@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load jformat %}
+{% load humanize %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
@@ -6,11 +8,11 @@
         <!-- هدر -->
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-800 mb-2">
-                تکمیل سفارش #{{ order.id }}
+                تکمیل سفارش #{{ order.order_number }}
             </h1>
             <div class="text-gray-600">
                 <p>لطفاً آدرس تحویل سفارش خود را وارد کنید.</p>
-                <p class="text-sm mt-1">مجموع قابل پرداخت: {{ order.total_price|intcomma }} تومان</p>
+                <p class="text-sm mt-1">مجموع قابل پرداخت: {{ order.get_total_price|intcomma }} تومان</p>
             </div>
         </div>
 
@@ -39,7 +41,7 @@
                 
                 <div class="pt-6 border-t">
                     <div class="flex justify-between">
-                        <a href="{% url 'orders:user_orders' %}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                        <a href="{% url 'accounts:user_orders' %}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
                             ذخیره و بازگشت
                         </a>
                         <button type="submit" class="px-8 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">

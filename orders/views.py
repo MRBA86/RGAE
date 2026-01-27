@@ -39,13 +39,13 @@ class CartRemoveView(View):
 class OrderCreateView(LoginRequiredMixin, View):
     def get(self, request):
         cart = Cart(request)
-        order = Order.objects.create(user=request.user, status=Order.Status.PENDING_PAYMENT)
+        order = Order.objects.create(user=request.user, status=Order.Status.PENDING_ADDRESS)
         for item in cart:
             OrderItem.objects.create(order=order, product=item['product'], price= item['price'], quantity=item['quantity'])
             
         cart.clear()
         messages.success(request, 'سفارش ایجاد شد.', 'success')
-        return redirect('orders:order_detail', order.id)
+        return redirect('orders:add_address', order.id)
     
     
 class OrderDetailView(LoginRequiredMixin, View):
