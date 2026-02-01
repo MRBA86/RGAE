@@ -4,6 +4,7 @@ from accounts.models import User
 from taggit.managers import TaggableManager
 from utils import slugify_farsi
 import django_jalali.db.models as jmodels
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 class Category(models.Model):
@@ -16,7 +17,7 @@ class Category(models.Model):
         
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify_farsi(self.title)
+            self.slug = slugify_farsi(self.name)
         super().save(*args, **kwargs)
     
     def __str__(self):
@@ -33,7 +34,7 @@ class Post(models.Model):
     slug = models.SlugField(verbose_name = "اسلاگ پست", max_length=255, unique=True, allow_unicode=True)
     tags = TaggableManager(verbose_name = "تگ های پست", blank=True)
     category = models.ManyToManyField(Category, verbose_name = "دسته بندی پست",)
-    content = models.TextField(verbose_name = "متن پست")
+    content = RichTextUploadingField(verbose_name = "متن پست")
     counted_views = models.IntegerField(verbose_name = "تعداد بازدید", default=0)
     created_date = jmodels.jDateTimeField(verbose_name = "تاریخ ایجاد", auto_now_add=True)
     updated_date = jmodels.jDateTimeField(verbose_name = "تاریخ ویرایش", auto_now=True)
@@ -58,3 +59,30 @@ class Post(models.Model):
     
     
     
+class Comment(models.Model):
+    post = models.ForeignKey(
+        'Post',
+        on_delete=models.CASCADE,
+        related_name='comments', verbose_name ="پست"
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments', verbose_name = "کاربر"
+    )
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='replies',verbose_name = "نظر اصلی"
+    )
+    body = models.TextField(verbose_name = "متن نظر")
+    is_active = models.BooleanField(verbose_name = "فعال است ؟",default=True)
+    created_at = jmodels.jDateTimeField(verbose_name = "تاریخ ایجاد",auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f'{self.user} - {self.body[:30]}'

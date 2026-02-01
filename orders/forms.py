@@ -6,14 +6,19 @@ class CartAddForm(forms.Form):
     quantity = forms.IntegerField(min_value=1 , max_value=10)
     
 
-class CouponAplyForm(forms.Form):
+class CouponApplyForm(forms.Form):
     code = forms.CharField(label='کد تخفیف')
     
-class PaymentSelectForm(forms.Form):
-
-    payment_type = forms.ChoiceField(choices=Order.PaymentType.choices, widget=forms.RadioSelect, label='روش پرداخت')
-
-
+class PaymentMethodForm(forms.Form):
+    payment_type = forms.ChoiceField(
+        choices=(
+            ('cash', 'پرداخت نقدی'),
+            ('installment', 'پرداخت اقساطی'),
+        ),
+        widget=forms.RadioSelect,
+        label='روش پرداخت'
+    )
+    
 class OrderAddressForm(forms.Form):
     USE_EXISTING_ADDRESS = 'existing'
     USE_NEW_ADDRESS = 'new'

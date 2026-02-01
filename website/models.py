@@ -3,6 +3,8 @@ from django.urls import reverse
 from utils import slugify_farsi
 from taggit.managers import TaggableManager
 import django_jalali.db.models as jmodels
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 class Contact(models.Model):
     name = models.CharField(verbose_name="نام", max_length=50)
@@ -86,7 +88,7 @@ class Project(models.Model):
     slug = models.SlugField(verbose_name="اسلاگ ", max_length=255, unique=True, allow_unicode=True)
     tags = TaggableManager(verbose_name = "تگ های پست", blank=True)
     category = models.ManyToManyField(ProjectCategory, verbose_name = "دسته بندی پروژه",)
-    content = models.TextField(verbose_name="محتوا پروژه ")
+    content = RichTextUploadingField(verbose_name="محتوا پروژه ")
     counted_views = models.IntegerField(verbose_name = "تعداد بازدید", default=0)
     created_date = jmodels.jDateTimeField(verbose_name="تاریخ ایجاد ", auto_now_add=True)
     updated_date = jmodels.jDateTimeField(verbose_name="تاریخ ویرایش ", auto_now=True)

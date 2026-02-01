@@ -3,7 +3,6 @@
 {% load jformat %}
 
 {% block profile_content %}
-<!--
   <div class="grid grid-cols-2 md:flex gap-5">
     <div class="flex md:w-1/4 gap-x-2 items-center bg-red-500 rounded-2xl px-3 py-2 text-xs sm:text-base">
       <svg class="fill-zinc-100 bg-red-600 rounded-xl p-1" xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="" viewBox="0 0 256 256">
@@ -46,7 +45,7 @@
       </div>
     </div>
   </div>
-  -->
+  <!--
   <div class="mt-10">
     <div class="text-zinc-800 text-lg mb-4">سفارش های اخیر من:</div>
     <table class="w-full">
@@ -64,30 +63,62 @@
           <th>
             <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400">وضعیت</p>
           </th>
+          <th>
+            <p class="text-xs md:text-sm font-normal flex items-center text-zinc-400">جزئیات</p>
+          </th>
         </tr>
       </thead>
       <tbody>
         {% for order in user_orders %}
         <tr class="hover:bg-zinc-100 text-xs md:text-sm">
           <td class="px-3 py-4 border-b">
-            <p class="text-zinc-700">#{{order.order_number}}</p>
+            <p class="text-zinc-700 items-center">#{{order.order_number}}</p>
           </td>
           <td class="p-3 border-b">
-            <p class="text-zinc-700">{{order.created_at|jformat:"%A %d %B %Y"}}</p>
+            <p class="text-zinc-700 items-center">{{order.created_at|jformat:"%A %d %B %Y"}}</p>
           </td>
           <td class="p-3 border-b">
-            <p class="text-zinc-700">{{order.get_total_price|intcomma}}</p>
+            <p class="text-zinc-700 items-center">{{order.get_total_price|intcomma}}</p>
           </td>
           <td class="p-3 border-b">
-           <p class="{% if order.status == 'paid' %}text-green-500
-                      {% elif order.status == 'waiting_approval' %}text-yellow-500
-                      {% elif order.status == 'canceled' %}text-red-500
-                      {% elif order.status == 'pending_payment' %}text-yellow-500
+           <p class="{% if order.status == 'paid' %}text-green-500 items-center
+                      {% elif order.status == 'waiting_address' %}text-yellow-500 items-center
+                      {% elif order.status == 'waiting_payment' %}text-yellow-500 items-center
+                      {% elif order.status == 'waiting_approval' %}text-yellow-500 items-center
+                      {% elif order.status == 'canceled' %}text-red-500 items-center
+                      {% elif order.status == 'pending' %}text-yellow-500 items-center
                       {% endif %}"> {{order.get_status_display}}</p>
+          </td>
+          <td class="p-3 border-b">
+            {% if order.status == 'paid' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                مشاهده 
+               </a>
+            {% elif order.status == 'waiting_address' %}
+              <a href="{%  url 'orders:add_address' order.id %}">
+                انتخاب و ثبت آدرس
+              </a>              
+            {% elif order.status == 'waiting_payment' %}
+              <a href="{%  url 'orders:select_payment' order.id %}">
+                 انتخاب روش پرداخت
+              </a>
+            {% elif order.status == 'waiting_approval' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                مشاهده
+              </a>
+            {% elif order.status == 'canceled' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                  مشاهده
+                </a>
+            {% elif order.status == 'pending' %}
+                <a href="{%  url 'orders:order_detail' order.id %}">
+                پرداخت
+              </a>
+            {% endif %} 
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-  </div>
+  </div>-->
 {% endblock %}

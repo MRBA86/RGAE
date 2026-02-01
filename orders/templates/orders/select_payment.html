@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+<h2>انتخاب روش پرداخت</h2>
+
+<p>
+    آدرس انتخاب‌شده:
+    <strong>{{ order.address }}</strong>
+</p>
+
+<p>
+    مبلغ کل:
+    <strong>{{ order.get_total_price|intcomma }} تومان</strong>
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card mb-3">
+        <div class="card-body">
+            {{ form.payment_type }}
+            {{ form.payment_type.errors }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        ادامه فرایند پرداخت
+    </button>
+</form>
+{% endblock %}

@@ -3,7 +3,6 @@
 {% load jformat %}
 
 {% block profile_content %}
-
   <div class="mt-10">
     <div class="text-zinc-800 text-lg mb-4">سفارش های من:</div>
     <table class="w-full">
@@ -37,10 +36,39 @@
           </td>
           <td class="p-3 border-b">
             <p class="{% if order.status == 'paid' %}text-green-500
+                      {% elif order.status == 'waiting_address' %}text-yellow-500
+                      {% elif order.status == 'waiting_payment' %}text-yellow-500
                       {% elif order.status == 'waiting_approval' %}text-yellow-500
                       {% elif order.status == 'canceled' %}text-red-500
-                      {% elif order.status == 'pending_payment' %}text-yellow-500
+                      {% elif order.status == 'pending' %}text-yellow-500
                       {% endif %}"> {{order.get_status_display}}</p>
+          </td>
+          <td class="p-3 border-b">
+            {% if order.status == 'paid' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                مشاهده 
+               </a>
+            {% elif order.status == 'waiting_address' %}
+              <a href="{%  url 'orders:add_address' order.id %}">
+                انتخاب و ثبت آدرس
+              </a>              
+            {% elif order.status == 'waiting_payment' %}
+              <a href="{%  url 'orders:select_payment' order.id %}">
+                 انتخاب روش پرداخت
+              </a>
+            {% elif order.status == 'waiting_approval' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                مشاهده
+              </a>
+            {% elif order.status == 'canceled' %}
+              <a href="{%  url 'orders:order_detail' order.id %}">
+                  مشاهده
+                </a>
+            {% elif order.status == 'pending' %}
+                <a href="{%  url 'orders:order_detail' order.id %}">
+                پرداخت
+              </a>
+            {% endif %} 
           </td>
         </tr>
         {% endfor %}

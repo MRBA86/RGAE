@@ -26,6 +26,8 @@ urlpatterns = [
     path('products/', include('products.urls', namespace='products')),
     path('blog/', include('blog.urls', namespace='blog')),
     path('orders/', include('orders.urls', namespace='orders')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
